@@ -14,6 +14,14 @@ terraform {
       version = "~> 2.7"
     }
   }
+
+  backend "s3" {
+    bucket       = "dev-portfolio-terraform-state-1"
+    key          = "dev-portfolio/backend/terraform.tfstate"
+    region       = "eu-north-1"
+    encrypt      = true
+    use_lockfile = true
+  }
 }
 
 provider "aws" {
