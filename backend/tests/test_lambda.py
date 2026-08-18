@@ -3,6 +3,8 @@ import json
 from unittest.mock import MagicMock
 
 os.environ["TABLE_NAME"] = "test-visitors"
+os.environ["AWS_DEFAULT_REGION"] = "eu-north-1"
+os.environ["AWS_EC2_METADATA_DISABLED"] = "true"
 
 import backend.lambda_function as lambda_function
 
