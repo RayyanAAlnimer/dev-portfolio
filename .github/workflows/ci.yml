@@ -143,10 +143,10 @@ jobs:
           aws-region: eu-north-1
 
       - name: Sync frontend to S3
-        run: aws s3 sync frontend/ s3://dev-portfolio --delete
+        run: aws s3 sync frontend/ s3://dev-portfolio-rayyan --delete
 
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id dev-portfolio-distribution \
+            --distribution-id E1KHR3DFLIPWQM \
             --paths "/*"
