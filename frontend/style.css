@@ -101,8 +101,55 @@
     text-transform: uppercase;
   }
   .nav-links a:hover{ color: var(--accent); text-decoration:none; }
-  @media (max-width:700px){ .nav-links{ display:none; } }
 
+  .menu-toggle{
+    display: none;
+    background: none;
+    border: 0;
+    padding: 6px;
+    cursor: pointer;
+  }
+
+  .menu-toggle span{
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin: 5px 0;
+    background: var(--text);
+  }
+
+  @media (max-width: 700px){
+    nav .wrap{
+      flex-wrap: wrap;
+    }
+
+    .menu-toggle{
+      display: block;
+      margin-left: auto;
+    }
+
+    .nav-links{
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      gap: 0;
+      padding-top: 16px;
+    }
+
+    .nav-links.open{
+      display: flex;
+    }
+
+    .nav-links li{
+      border-top: 1px solid var(--line);
+    }
+
+    .nav-links a{
+      display: block;
+      padding: 14px 0;
+    }
+  }
+  
   /* ===== HERO ===== */
   .hero{
     padding: 110px 0 90px;
