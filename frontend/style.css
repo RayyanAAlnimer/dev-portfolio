@@ -191,6 +191,14 @@
   @media (max-width: 700px){
     .hero-chip{ width: 600px; opacity: .12; }
   }
+  /* Use one centered background chip on narrow screens. */
+  @media (max-width: 620px){
+    .hero-chip{
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .hero-chip-right{ display: none; }
+  }
 
   .corner{
     position:absolute; width:22px; height:22px;
