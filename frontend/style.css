@@ -165,7 +165,33 @@
     padding: clamp(64px, 10vw, 110px) 0
              clamp(56px, 8vw, 90px);
     position: relative;
+    isolation: isolate;
+    overflow: clip;
   }
+  /* Oversized background chips extend beyond the left and right edges. */
+  .hero-chip{
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 0;
+    width: clamp(600px, 85vw, 1100px);
+    aspect-ratio: 1;
+    transform: translate(-38%, -50%);
+    color: var(--accent);
+    opacity: .24;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero-chip-right{
+    left: auto;
+    right: 0;
+    transform: translate(38%, -50%);
+  }
+  .hero-chip-art{ display: block; width: 100%; height: 100%; }
+  @media (max-width: 700px){
+    .hero-chip{ width: 600px; opacity: .12; }
+  }
+
   .corner{
     position:absolute; width:22px; height:22px;
     border: 1px solid var(--line);
@@ -335,11 +361,33 @@
   
   .chip-row{ display:flex; flex-wrap:wrap; gap: 8px; }
   .chip{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-size: 13px; color: var(--text);
     background: var(--bg-panel-2);
     border: 1px solid var(--line);
     padding: 5px 11px;
     border-radius: var(--radius);
+  }
+
+  .chip i,
+  .chip .skill-icon{
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+  .chip i{
+    font-size: 20px;
+    line-height: 1;
+    text-align: center;
+  }
+  .chip .skill-icon{
+    color: var(--accent);
+  }
+
+  .chip .skill-icon-monochrome{
+    filter: brightness(0) invert(1);
   }
 
   /* ===== CERTS ===== */

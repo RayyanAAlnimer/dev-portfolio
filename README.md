@@ -91,7 +91,8 @@ GitHub Actions authenticates to AWS using **OpenID Connect (OIDC)** and IAM role
 ├── frontend/
 │   ├── index.html
 │   ├── style.css
-│   └── script.js
+│   ├── script.js
+│   └── hero-chip.js
 └── terraform/
     ├── main.tf
     ├── providers.tf

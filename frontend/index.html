@@ -10,6 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -39,6 +43,13 @@
 
     <!-- Introduction/Hero Section -->
     <header class="hero">
+      <!-- Decorative ASCII chips, rendered locally without a 3D dependency. -->
+      <div class="hero-chip" aria-hidden="true">
+        <canvas class="hero-chip-art" data-direction="1" width="480" height="480"></canvas>
+      </div>
+      <div class="hero-chip hero-chip-right" aria-hidden="true">
+        <canvas class="hero-chip-art" data-direction="-1" width="480" height="480"></canvas>
+      </div>
       <div class="wrap">
         <div class="frame">
           <span class="corner tl"></span><span class="corner tr"></span>
@@ -281,59 +292,170 @@
 
         <div class="skills-grid reveal">
           <div class="skill-cat">
-            <div class="k">Programming Languages</div>
+            <div class="k">Languages</div>
             <div class="chip-row">
-              <span class="chip">Python</span>
-              <span class="chip">C/C++</span>
-              <span class="chip">Java</span>
-              <span class="chip">JavaScript</span>
-              <span class="chip">SQL</span>
-              <span class="chip">Verilog</span>
-              <span class="chip">HTML/CSS</span>
+              <span class="chip">
+                <i class="devicon-python-plain colored" aria-hidden="true"></i>
+                Python
+              </span>
+              <span class="chip">
+                <i class="devicon-c-plain colored" aria-hidden="true"></i>
+                C
+              </span>
+              <span class="chip">
+                <i class="devicon-cplusplus-plain colored" aria-hidden="true"></i>
+                C++
+              </span>
+              <span class="chip">
+                <i class="devicon-java-plain colored" aria-hidden="true"></i>
+                Java
+              </span>
+              <span class="chip">
+                <i class="devicon-javascript-plain colored" aria-hidden="true"></i>
+                JavaScript
+              </span>
+              <span class="chip">
+                <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/></svg>
+                SQL
+              </span>
             </div>
           </div>
 
           <div class="skill-cat">
-            <div class="k">ML Frameworks</div>
+            <div class="k">Web Technologies</div>
             <div class="chip-row">
-              <span class="chip">PyTorch</span>
-              <span class="chip">Scikit-learn</span>
-              <span class="chip">NumPy</span>
-              <span class="chip">Pandas</span>
-              <span class="chip">OpenCV</span>
+              <span class="chip">
+                <i class="devicon-html5-plain colored" aria-hidden="true"></i>
+                HTML
+              </span>
+              <span class="chip">
+                <i class="devicon-css3-plain colored" aria-hidden="true"></i>
+                CSS
+              </span>
+              <span class="chip">
+                <i class="devicon-nodejs-plain colored" aria-hidden="true"></i>
+                Node.js
+              </span>
+              <span class="chip">
+                <i class="devicon-express-original" aria-hidden="true"></i>
+                Express.js
+              </span>
+              <span class="chip">
+                <i class="devicon-fastapi-plain colored" aria-hidden="true"></i>
+                FastAPI
+              </span>
+              <span class="chip">
+                <i class="devicon-tailwindcss-original colored" aria-hidden="true"></i>
+                Tailwind CSS
+              </span>
             </div>
           </div>
 
           <div class="skill-cat">
-            <div class="k">Methods</div>
+            <div class="k">Machine Learning &amp; Data</div>
             <div class="chip-row">
-              <span class="chip">Machine Learning</span>
-              <span class="chip">Computer Vision</span>
-              <span class="chip">Data Analysis</span>
-              <span class="chip">Data Preprocessing</span>
-              <span class="chip">Web Development</span>
+              <span class="chip">
+                <i class="devicon-pytorch-original colored" aria-hidden="true"></i>
+                PyTorch
+              </span>
+              <span class="chip">
+                <i class="devicon-scikitlearn-plain colored" aria-hidden="true"></i>
+                Scikit-learn
+              </span>
+              <span class="chip">
+                <i class="devicon-numpy-plain colored" aria-hidden="true"></i>
+                NumPy
+              </span>
+              <span class="chip">
+                <i class="devicon-pandas-plain" aria-hidden="true"></i>
+                Pandas
+              </span>
+              <span class="chip">
+                <i class="devicon-opencv-plain colored" aria-hidden="true"></i>
+                OpenCV
+              </span>
+              <span class="chip">
+                <img class="skill-icon skill-icon-monochrome" src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/ultralytics.svg" alt="" width="20" height="20" />
+                Ultralytics
+              </span>
             </div>
           </div>
 
           <div class="skill-cat">
-            <div class="k">Infrastructure</div>
+            <div class="k">Cloud &amp; Databases</div>
             <div class="chip-row">
-              <span class="chip">Docker</span>
-              <span class="chip">AWS</span>
-              <span class="chip">Microsoft Azure</span>
-              <span class="chip">PostgreSQL</span>
-              <span class="chip">Raspberry Pi</span>
+              <span class="chip">
+                <i class="devicon-amazonwebservices-plain-wordmark" aria-hidden="true"></i>
+                AWS
+              </span>
+              <span class="chip">
+                <i class="devicon-azure-plain colored" aria-hidden="true"></i>
+                Microsoft Azure
+              </span>
+              <span class="chip">
+                <i class="devicon-docker-plain colored" aria-hidden="true"></i>
+                Docker
+              </span>
+              <span class="chip">
+                <i class="devicon-netlify-plain colored" aria-hidden="true"></i>
+                Netlify
+              </span>
+              <span class="chip">
+                <i class="devicon-postgresql-plain colored" aria-hidden="true"></i>
+                PostgreSQL
+              </span>
+              <span class="chip">
+                <i class="devicon-mongodb-plain colored" aria-hidden="true"></i>
+                MongoDB
+              </span>
             </div>
           </div>
 
           <div class="skill-cat">
-            <div class="k">Tools</div>
+            <div class="k">Systems &amp; Hardware</div>
             <div class="chip-row">
-              <span class="chip">Git</span>
-              <span class="chip">GitHub</span>
-              <span class="chip">VS Code</span>
-              <span class="chip">Postman</span>
-              <span class="chip">Jupyter Notebook</span>
+              <span class="chip">
+                <i class="devicon-linux-plain" aria-hidden="true"></i>
+                Linux
+              </span>
+              <span class="chip">
+                <i class="devicon-raspberrypi-plain colored" aria-hidden="true"></i>
+                Raspberry Pi
+              </span>
+              <span class="chip">
+                <i class="devicon-arduino-plain colored" aria-hidden="true"></i>
+                Arduino
+              </span>
+              <span class="chip">
+                <svg class="skill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4M18 9h4m-4 6h4"/></svg>
+                Verilog
+              </span>
+            </div>
+          </div>
+
+          <div class="skill-cat">
+            <div class="k">Development Tools</div>
+            <div class="chip-row">
+              <span class="chip">
+                <i class="devicon-git-plain colored" aria-hidden="true"></i>
+                Git
+              </span>
+              <span class="chip">
+                <i class="devicon-github-original" aria-hidden="true"></i>
+                GitHub
+              </span>
+              <span class="chip">
+                <i class="devicon-vscode-plain colored" aria-hidden="true"></i>
+                VS Code
+              </span>
+              <span class="chip">
+                <i class="devicon-postman-plain colored" aria-hidden="true"></i>
+                Postman
+              </span>
+              <span class="chip">
+                <i class="devicon-jupyter-plain colored" aria-hidden="true"></i>
+                Jupyter Notebook
+              </span>
             </div>
           </div>
         </div>
@@ -342,7 +464,7 @@
           <div
             class="k"
             style="
-              font-family: &quot;IBM Plex Mono&quot;, monospace;
+              font-family: 'IBM Plex Mono', monospace;
               font-size: 11px;
               text-transform: uppercase;
               letter-spacing: 0.1em;
@@ -426,15 +548,16 @@
         (entries) => {
           entries.forEach((e) => {
             if (e.isIntersecting) {
-              e.target.classList.add("in");
+              e.target.classList.add('in');
               io.unobserve(e.target);
             }
           });
         },
         { threshold: 0.12 },
       );
-      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
     </script>
     <script src="script.js"></script>
+    <script src="hero-chip.js"></script>
   </body>
 </html>
