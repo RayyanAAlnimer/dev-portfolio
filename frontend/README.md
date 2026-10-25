@@ -27,7 +27,8 @@ npm run dev
 - `InterfaceBorder` adds reusable decorative trim to the hero and footer.
 - `src/lib/chipAnimation.js` draws the original ASCII artwork. `HeroChip` starts
   it when mounted and cleans up observers, listeners, and animation frames.
-- `public/resources/` contains local copies of the favicon, reports, and presentation.
+- `public/mii-favicon.png` is the browser tab icon and is included in deployment.
+- `public/resources/` contains local copies of the reports and presentation.
   These files are ignored by Git. Restore them from your own copies when
   setting up this app locally; CI preserves the existing S3 `resources/` files.
 - `index.html` loads the fonts and icon stylesheet.
