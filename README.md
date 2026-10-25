@@ -1,42 +1,36 @@
-# DevPortfolio
+# DevPortfolio v2.0
 
-A cloud-hosted developer portfolio built on AWS as an implementation of the Cloud Resume Challenge.
+A React portfolio built with Vite and hosted on AWS as an implementation of the Cloud Resume Challenge.
+
+Version 2.0 replaces the original static website with reusable React components and a NieR:Automata-inspired design: warm beige and charcoal styling, a spinning ASCII chip, responsive navigation, and optional interface sounds.
 
 The project focuses on designing and deploying a serverless AWS architecture, managing infrastructure with Terraform, and automating testing and deployment through GitHub Actions.
 
 ## Architecture
 
-```text
-                         Internet
-                            |
-                        Route 53
-                            |
-                        CloudFront
-                            |
-                       Private S3
-                       (Frontend)
+[![AWS architecture for ralnimer.dev, showing website delivery, the visitor counter, and deployment infrastructure](docs/architecture/ralnimer-dev-architecture.svg)](docs/architecture/ralnimer-dev-architecture.svg)
 
-Visitor Counter:
+Click the diagram to view it at full size. Update it by replacing `docs/architecture/ralnimer-dev-architecture.svg`.
 
-Browser
-   |
-API Gateway
-   |
-Lambda
-   |
-DynamoDB
+- **Website delivery:** Route 53 resolves the custom domain to CloudFront. CloudFront serves the static frontend from a private S3 origin using Origin Access Control (OAC), with an ACM certificate for HTTPS.
+- **Visitor counter:** The browser calls API Gateway directly at `GET /visitors`. A Python Lambda function atomically increments a DynamoDB counter and returns the updated count. This counts requests, not unique visitors.
+- **Access control:** The Lambda execution role permits `dynamodb:UpdateItem` on the counter table, and a resource-based policy permits API Gateway to invoke Lambda. API CORS allows `https://ralnimer.dev`.
+
+The backend is configured in `eu-north-1`. Frontend DNS, CloudFront, S3 hosting, and ACM are configured outside the backend Terraform files.
+
+## Local Development
+
+The React version is developed in `frontend/` using Vite:
+
+```sh
+cd frontend
+npm ci
+npm run dev
 ```
 
-### AWS Services
+To create a production build, run `npm run build` from that directory. Output is written to `frontend/dist/`.
 
-- **Amazon S3** hosts the static frontend in a private bucket.
-- **Amazon CloudFront** distributes and caches the website globally using Origin Access Control.
-- **Amazon Route 53** provides DNS for the custom domain.
-- **AWS Certificate Manager** provides the TLS certificate used by CloudFront.
-- **Amazon API Gateway** exposes the visitor counter API.
-- **AWS Lambda** implements the serverless visitor counter backend.
-- **Amazon DynamoDB** stores the visitor count.
-- **AWS IAM** provides least-privilege access between services and for CI/CD.
+React is now the only frontend. GitHub Actions builds it and deploys `frontend/dist/` to S3. The original website remains available in Git history.
 
 ## Infrastructure as Code
 
@@ -49,32 +43,39 @@ Terraform provisions and manages resources including:
 - IAM roles and policies
 - API Gateway
 
-Terraform state is stored remotely in Amazon S3 so infrastructure state is persistent and can be safely accessed by the CI/CD pipeline.
+Terraform state is stored in an existing S3 bucket with encryption and native S3 lockfiles enabled. The state bucket is separate from the frontend bucket; DynamoDB is used for the visitor counter, not state locking.
 
 ## CI/CD
 
-GitHub Actions provides automated testing and deployment whenever changes are pushed to `main`.
+GitHub Actions runs backend tests, a React production build, and Terraform checks on pull requests and pushes to `main`. Deployment runs only on pushes to `main`, after all three checks succeed.
 
 ```text
-Push to main
+Pull request / push to main
      |
-     +-- Backend Tests
-     |
-     +-- Terraform Checks
-              |
-              +-- Deploy Backend
-              |
-              +-- Deploy Frontend
+     +-- Backend Tests ---------+
+     |                          |
+     +-- React Build -----------+
+     |                          |
+     +-- Terraform Checks ------+
+                                |
+                      All checks pass
+                      + push to main
+                                |
+                     +----------+----------+
+                     |                     |
+              Deploy Backend        Deploy Frontend
 ```
 
 The pipeline:
 
 1. Runs Python unit tests for the Lambda backend.
-2. Checks Terraform formatting and configuration.
-3. Generates a Terraform execution plan.
-4. Applies validated infrastructure changes to AWS.
-5. Synchronizes frontend files with Amazon S3.
-6. Invalidates the CloudFront cache so new frontend changes are immediately available.
+2. Installs frontend dependencies with `npm ci` and builds the React app.
+3. Checks Terraform formatting and configuration, then saves an execution plan.
+4. Applies the saved infrastructure plan after all checks pass.
+5. Downloads the verified frontend build artifact and synchronizes it with S3.
+6. Requests a CloudFront cache invalidation after the frontend sync.
+
+Backend and frontend deployments run independently after the checks pass. Frontend sync excludes `resources/*`, preserving documents uploaded separately to S3. Local resources live in `frontend/public/resources/`. They are ignored by Git and must be provided separately for local previews or uploaded to S3 for updated downloads.
 
 GitHub Actions authenticates to AWS using **OpenID Connect (OIDC)** and IAM roles instead of storing long-lived AWS access keys in GitHub.
 
@@ -88,11 +89,19 @@ GitHub Actions authenticates to AWS using **OpenID Connect (OIDC)** and IAM role
 ├── backend/
 │   ├── lambda_function.py
 │   └── tests/
+├── docs/
+│   └── architecture/
+│       └── ralnimer-dev-architecture.svg
 ├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── data/
+│   │   ├── hooks/
+│   │   └── lib/
+│   ├── public/
 │   ├── index.html
-│   ├── style.css
-│   ├── script.js
-│   └── hero-chip.js
+│   ├── package.json
+│   └── vite.config.js
 └── terraform/
     ├── main.tf
     ├── providers.tf
@@ -110,4 +119,4 @@ GitHub Actions authenticates to AWS using **OpenID Connect (OIDC)** and IAM role
 
 **Backend:** Python, boto3, pytest
 
-**Frontend:** HTML, CSS, JavaScript
+**Frontend:** React, Vite, CSS, JavaScript

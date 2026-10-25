@@ -1,5 +1,3 @@
-# This is the file for Terraform itself + AWS provider configuration
-
 terraform {
   required_version = ">= 1.6.0"
 

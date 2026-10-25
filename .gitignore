@@ -25,3 +25,6 @@ terraform/lambda_function.zip
 # IDE
 .vscode/
 .idea/
+
+# Portfolio documents are uploaded separately, not committed.
+/frontend/public/resources/

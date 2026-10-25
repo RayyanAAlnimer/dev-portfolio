@@ -35,6 +35,39 @@ jobs:
       - name: Run unit tests
         run: python -m pytest
 
+  frontend-build:
+    name: Build React Frontend
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build portfolio v2.0
+        run: npm run build
+
+      - name: Upload frontend build
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist/
+          if-no-files-found: error
+          retention-days: 1
+
   terraform:
     name: Terraform Checks
     runs-on: ubuntu-latest
@@ -82,6 +115,7 @@ jobs:
     needs:
       - test
       - terraform
+      - frontend-build
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
@@ -125,6 +159,7 @@ jobs:
     needs:
       - test
       - terraform
+      - frontend-build
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
@@ -136,6 +171,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Download verified frontend build
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist/
+
       - name: Configure AWS deployment credentials
         uses: aws-actions/configure-aws-credentials@v5
         with:
@@ -143,7 +184,8 @@ jobs:
           aws-region: eu-north-1
 
       - name: Sync frontend to S3
-        run: aws s3 sync frontend/ s3://dev-portfolio-rayyan --delete
+        # Preserve resources uploaded separately from the repository.
+        run: aws s3 sync frontend/dist/ s3://dev-portfolio-rayyan --delete --exclude "resources/*"
 
       - name: Invalidate CloudFront cache
         run: |
